@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import BackToTopButton from "../components/BackToTopButton";
 
 export default function Leaves() {
     const [leaveRequests, setLeaveRequests] = useState([]);
@@ -62,6 +63,7 @@ export default function Leaves() {
 
     return (
         <div className="min-h-screen p-6">
+            <BackToTopButton />
         <div className="lines">
             <div className="line"></div>
             <div className="line"></div>

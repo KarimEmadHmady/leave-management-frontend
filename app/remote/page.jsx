@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image"; 
+import BackToTopButton from "../components/BackToTopButton";
 
 export default function RemoteWork() {
     const [requests, setRequests] = useState([]);
@@ -56,6 +57,7 @@ export default function RemoteWork() {
 
     return (
         <div className="min-h-screen p-6">
+            <BackToTopButton />
             <div className="lines">
                 <div className="line"></div>
                 <div className="line"></div>
@@ -66,7 +68,6 @@ export default function RemoteWork() {
                 Remote Work Requests
             </h1>
 
-            {/* فورم الريموت */}
             <div className="bg-dives p-6 rounded-lg shadow-lg mb-8 max-w-lg mx-auto">
                 <h2 className="text-xl font-semibold mb-4 text-gray-200">
                     Request Remote Work

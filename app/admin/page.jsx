@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import BackToTopButton from "../components/BackToTopButton";
 
 export default function AdminDashboard() {
   const [leaveRequests, setLeaveRequests] = useState([]);
@@ -91,6 +92,7 @@ export default function AdminDashboard() {
   
   return (
     <div className="min-h-screen p-6">
+      <BackToTopButton />
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-200">
         Admin Dashboard
       </h1>
