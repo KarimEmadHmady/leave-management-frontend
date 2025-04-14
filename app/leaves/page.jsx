@@ -177,7 +177,7 @@ export default function Leaves() {
                     </p>
                     {request.adminComment && (
                         <p>
-                        <strong>Admin Comment:</strong> {request.adminComment}
+                        <strong>HR Comment:</strong> {request.adminComment}
                         </p>
                     )}
                     </div>

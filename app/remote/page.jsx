@@ -138,7 +138,7 @@ export default function RemoteWork() {
                                     </p>
                                     {req.adminComment && (
                                         <p>
-                                            <strong>Admin Comment:</strong> {req.adminComment}
+                                            <strong>HR Comment:</strong> {req.adminComment}
                                         </p>
                                     )}
                                 </div>
