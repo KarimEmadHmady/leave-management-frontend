@@ -12,12 +12,12 @@ export default function Home() {
   useEffect(() => {
     const fetchLeaveBalance = async () => {
       const token = localStorage.getItem("token");
-
+  
       if (!token) {
         router.push("/login");
         return;
       }
-
+  
       try {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/api/users/me`,
@@ -27,17 +27,26 @@ export default function Home() {
             },
           }
         );
-
+  
         setLeaveBalance(res.data.leaveBalance);
+        // إضافة تحقق إذا كانت مدة التوظيف أقل من 6 أشهر
+        const hireDate = new Date(res.data.hireDate);
+        const currentDate = new Date();
+        const monthsEmployed = (currentDate.getFullYear() - hireDate.getFullYear()) * 12 + currentDate.getMonth() - hireDate.getMonth();
+  
+        if (monthsEmployed < 6) {
+          setError("You must be employed for at least 6 months to request leave");
+        }
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error);
         setLoading(false);
       }
     };
-
+  
     fetchLeaveBalance();
   }, [router]);
+  
 
   return (
     <div className="p-6 text-white">
