@@ -55,7 +55,12 @@ export default function AdminDashboard() {
         { status, adminComment },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setLeaveRequests((prevRequests) => [res.data.leaveRequest, ...prevRequests]);
+  
+      setLeaveRequests((prevRequests) => 
+        prevRequests.map((request) =>
+          request._id === id ? { ...request, status, adminComment } : request
+        )
+      );
     } catch (err) {
       setError(err.response?.data?.message || "Failed to update status");
     }
@@ -71,11 +76,17 @@ export default function AdminDashboard() {
         { comment: adminComment },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setRemoteWorkRequests((prevRequests) => [res.data, ...prevRequests]);
+  
+      setRemoteWorkRequests((prevRequests) =>
+        prevRequests.map((request) =>
+          request._id === id ? { ...request, status, comment: adminComment } : request
+        )
+      );
     } catch (err) {
       setError(err.response?.data?.message || "Failed to update status");
     }
   };
+  
   
   
   return (
