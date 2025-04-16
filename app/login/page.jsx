@@ -5,12 +5,15 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useUser } from "../context/UserContext";
 import Image from "next/image";
+import { Eye, EyeOff } from "lucide-react"; 
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
   const { setUser } = useUser();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,6 +36,11 @@ export default function Login() {
       setError(err.response?.data?.message || "Something went wrong");
     }
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center ">
@@ -66,16 +74,23 @@ export default function Login() {
               required
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-6 relative">
             <label className="block text-gray-300">Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
+              className="w-full p-2 pr-10 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200 bg-transparent"
               required
             />
+            <span
+              onClick={togglePasswordVisibility}
+              className="absolute right-3 top-9 cursor-pointer text-blue-400"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </span>
           </div>
+
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"

@@ -3,9 +3,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function CreateUserPage() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,6 +30,10 @@ export default function CreateUserPage() {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -68,20 +74,27 @@ export default function CreateUserPage() {
             className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:text-blue-400 placeholder-blue-400 text-blue-700"
           />
         </div>
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium text-blue-400 mb-1">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Create password"
-            className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:text-blue-400 placeholder-blue-400 text-blue-700"
-          />
-        </div>
+        <div className="relative">
+  <label htmlFor="password" className="block text-sm font-medium text-blue-400 mb-1">
+    Password
+  </label>
+  <input
+    id="password"
+    type={showPassword ? "text" : "password"}
+    name="password"
+    value={formData.password}
+    onChange={handleChange}
+    placeholder="Create password"
+    className="w-full border border-gray-300 p-2 pr-10 rounded-lg focus:outline-none focus:ring-2 focus:text-blue-400 placeholder-blue-400 text-blue-700"
+  />
+  <span
+    onClick={togglePasswordVisibility}
+    className="absolute right-3 top-9 cursor-pointer text-blue-400"
+  >
+    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+  </span>
+</div>
+
         <div>
           <label htmlFor="hireDate" className="block text-sm font-medium text-blue-400 mb-1">
             Hire Date

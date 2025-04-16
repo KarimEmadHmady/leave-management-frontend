@@ -4,12 +4,15 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function EditUserPage() {
   const { id } = useParams();
   const router = useRouter();
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true); 
+  const [showPassword, setShowPassword] = useState(false);
+
 
   useEffect(() => {
     setLoading(true); 
@@ -41,7 +44,7 @@ export default function EditUserPage() {
       const updatedData = { ...formData };
 
       if (!formData.password) {
-        delete updatedData.password; // ما تبعتش الباسورد لو المستخدم سابه فاضي
+        delete updatedData.password;    
       }
       await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/user-details/${id}`, formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -77,19 +80,31 @@ export default function EditUserPage() {
       });
   };
 
+
   const renderInput = (label, name, type = "text") => (
-    <div>
+    <div className="relative">
       <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
       <input
-        type={type}
+        type={type === "password" && showPassword ? "text" : type}
         name={name}
         value={formData[name] || ""}
         onChange={handleChange}
         id={name}
-        className="w-full border p-2 rounded"
+        className="w-full border p-2 rounded pr-10"
       />
+      {type === "password" && (
+        <span
+          onClick={togglePasswordVisibility}
+          className="absolute right-3 top-9 cursor-pointer text-blue-500"
+        >
+          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+        </span>
+      )}
     </div>
   );
+  
+  const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
+
 
   const renderSelect = (label, name, options) => (
     <div>
