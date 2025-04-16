@@ -188,38 +188,41 @@ export default function UserDetailsPage() {
 
         {/* Buttons */}
         <div className="flex flex-wrap gap-3 mt-8 align-center justify-center">
-  <Button
-    className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-blue-600 hover:bg-blue-700 transition-all justify-center"
-    onClick={() => router.push(`/admin/users/edit/${user._id}`)}
-  >
-    <PencilIcon className="h-5 w-5" />
-    Edit
-  </Button>
+          <Button
+            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-blue-600 hover:bg-blue-700 transition-all justify-center"
+            onClick={() => router.push(`/admin/users/edit/${user._id}`)}
+          >
+            <PencilIcon className="h-5 w-5" />
+            Edit
+          </Button>
 
-  <Button
-    variant="secondary"
-    className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-sm hover:bg-gray-200 transition-all justify-center"
-    onClick={() => router.back()}
-  >
-    Back
-  </Button>
+          <Button
+            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-green-600 hover:bg-green-700 transition-all justify-center"
+            onClick={handleExportExcel}
+          >
+            🧾 Download Excel
+          </Button>
 
-  <Button
-    variant="destructive"
-    className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md hover:bg-red-700 transition-all justify-center"
-    onClick={handleDelete}
-  >
-    <TrashIcon className="h-5 w-5" />
-    Delete
-  </Button>
 
-  <Button
-    className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-green-600 hover:bg-green-700 transition-all justify-center"
-    onClick={handleExportExcel}
-  >
-    🧾 Download Excel
-  </Button>
-</div>
+          <Button
+            variant="destructive"
+            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md hover:bg-red-700 transition-all justify-center"
+            onClick={handleDelete}
+          >
+            <TrashIcon className="h-5 w-5" />
+            Delete
+          </Button>
+
+          <Button
+            variant="secondary"
+            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-sm hover:bg-gray-200 transition-all justify-center"
+            onClick={() => router.back()}
+          >
+            Back
+          </Button>
+
+
+        </div>
 
 
               </Card>
