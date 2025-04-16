@@ -132,7 +132,7 @@ export default function UserDetailsPage() {
         </Section>
 
         {/* Buttons */}
-        <div className="flex flex-wrap gap-4 mt-8">
+        <div className="flex flex-wrap gap-3 mt-8 align-center justify-center">
           <Button
             className="flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-blue-600 hover:bg-blue-700 transition-all"
             onClick={() => router.push(`/admin/users/edit/${user._id}`)}
