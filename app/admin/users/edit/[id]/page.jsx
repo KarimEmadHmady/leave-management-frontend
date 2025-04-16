@@ -139,7 +139,7 @@ export default function EditUserPage() {
   );
 
   return (
-    <div className="p-6 max-w-5xl mx-auto text-white bg-blue-100 rounded-[20px] p-[55px]">
+<div className="max-w-5xl m-[15px] text-white bg-blue-100 rounded-[20px] p-[25px] sm:m-auto ">
       <div className="lines">
         <div className="line"></div>
         <div className="line"></div>
@@ -149,13 +149,13 @@ export default function EditUserPage() {
       
       {/* Loader Spinner */}
       {loading ? (
-            <div className="flex justify-center items-center min-h-screen flex-col gap-3.5">
+            <div className="flex justify-center items-center min-h-screen flex-col gap-3.5 ">
               <Image
                 src="/logo.png"
                 alt="Company Logo"
                 width={100}
                 height={30}
-                className="hover:opacity-80 transition"
+                className="hover:opacity-80 transition  "
               />
               <p className="text-black ml-4">Loading users...</p>
             </div>
@@ -164,7 +164,7 @@ export default function EditUserPage() {
           {/* Profile Image */}
           <div className="text-center">
             {formData.profileImage && (
-              <img src={formData.profileImage} alt="Profile" className="mx-auto w-32 h-32 object-cover rounded-full mb-4" />
+              <img src={formData.profileImage} alt="Profile" className="mx-auto  object-cover rounded-full mb-4 w-[90px] h-[90px] sm:w-[120px] sm:h-[120px]" />
             )}
             <input type="file" name="profileImage" onChange={handleImageChange} className="text-blue-400" />
           </div>

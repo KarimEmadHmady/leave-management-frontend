@@ -8,6 +8,8 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { toast } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css"; 
 import Image from "next/image"; 
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 export default function UserDetailsPage() {
   const params = useParams();
@@ -39,6 +41,58 @@ export default function UserDetailsPage() {
     }
   };
 
+  const handleExportExcel = () => {
+    if (!user) return;
+  
+    const data = [
+      {
+        Name: user.name,
+        Email: user.email,
+        Role: user.role,
+        JobTitle: user.jobTitle,
+        Salary: user.salary,
+        TransportationAllowance: user.transportationAllowance,
+        ContractStart: formatDate(user.contractStart),
+        ContractEnd: formatDate(user.contractEnd),
+        BirthDate: formatDate(user.birthDate),
+        HireDate: formatDate(user.hireDate),
+        Age: user.age,
+        Gender: user.gender,
+        MaritalStatus: user.maritalStatus,
+        NationalID: user.nationalID,
+        NationalIDExpiry: formatDate(user.nationalIDExpiry),
+        Governorate: user.governorate,
+        NationalIDAddress: user.nationalIDAddress,
+        PersonalPhone: user.personalPhone,
+        CompanyPhone: user.companyPhone,
+        InsuranceStatus: user.insuranceStatus,
+        InsuranceNumber: user.insuranceNumber,
+        Qualification: user.qualificationName,
+        // Leave balance
+        AnnualLeave: user.leaveBalance?.annual,
+        SickLeave: user.leaveBalance?.sick,
+        UnpaidLeave: user.leaveBalance?.unpaid,
+        // Documents
+        QualificationOriginal: user.qualificationOriginalAvailable ? "Yes" : "No",
+        BirthCertificate: user.birthCertificateAvailable ? "Yes" : "No",
+        MilitaryService: user.militaryServiceAvailable ? "Yes" : "No",
+        CriminalRecord: user.criminalRecordAvailable ? "Yes" : "No",
+        WorkCard: user.workCardAvailable ? "Yes" : "No",
+        InsurancePrint: user.insurancePrintAvailable ? "Yes" : "No",
+        NationalIDCopy: user.nationalIDCopyAvailable ? "Yes" : "No",
+        SkillsCertificate: user.skillsCertificateAvailable ? "Yes" : "No",
+      },
+    ];
+  
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "User Details");
+  
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const dataBlob = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(dataBlob, `${user.name.replace(/\s+/g, "_")}_Details.xlsx`);
+  };
+
           if (!user) return <div className="p-6"> 
             <div className="flex justify-center items-center min-h-screen flex-col gap-3.5 ">
               <Image
@@ -66,14 +120,14 @@ export default function UserDetailsPage() {
             <Image
               src={user.profileImage} 
               alt="Profile"
-              width={128} 
-              height={128} 
-              className="object-cover rounded-full border-2 shadow-md rounded-full w-[100px] h-[100px] p-0"
+              width={100} 
+              height={100} 
+              className="object-cover rounded-full border-2 shadow-md p-0 w-[75px] h-[75px] sm:w-[100px] sm:h-[100px]"
               priority 
             />
           )}
           <div>
-            <h2 className="text-3xl font-bold text-blue-800">{user.name}</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-blue-800 ">{user.name}</h2>
             <p className="text-gray-500">{user.email}</p>
           </div>
         </div>
@@ -104,7 +158,8 @@ export default function UserDetailsPage() {
 
         {/* Documents Section */}
         <Section title="Documents Availability">
-          <ul className="grid grid-cols-2 gap-2 list-disc ml-6 text-sm text-blue-800">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 list-disc ml-6 text-sm text-blue-800">
+
             {[  
               ["Qualification Original", user.qualificationOriginalAvailable],
               ["Birth Certificate", user.birthCertificateAvailable],
@@ -133,31 +188,39 @@ export default function UserDetailsPage() {
 
         {/* Buttons */}
         <div className="flex flex-wrap gap-3 mt-8 align-center justify-center">
-          <Button
-            className="flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-blue-600 hover:bg-blue-700 transition-all"
-            onClick={() => router.push(`/admin/users/edit/${user._id}`)}
-          >
-            <PencilIcon className="h-5 w-5" />
-            Edit
-          </Button>
+  <Button
+    className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-blue-600 hover:bg-blue-700 transition-all justify-center"
+    onClick={() => router.push(`/admin/users/edit/${user._id}`)}
+  >
+    <PencilIcon className="h-5 w-5" />
+    Edit
+  </Button>
 
-          <Button
-            variant="secondary"
-            className="flex items-center gap-2 px-5 py-2 rounded-xl shadow-sm hover:bg-gray-200 transition-all"
-            onClick={() => router.back()}
-          >
-            Back
-          </Button>
+  <Button
+    variant="secondary"
+    className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-sm hover:bg-gray-200 transition-all justify-center"
+    onClick={() => router.back()}
+  >
+    Back
+  </Button>
 
-          <Button
-            variant="destructive"
-            className="flex items-center gap-2 px-5 py-2 rounded-xl shadow-md hover:bg-red-700 transition-all"
-            onClick={handleDelete}
-          >
-            <TrashIcon className="h-5 w-5" />
-            Delete
-          </Button>
-        </div>
+  <Button
+    variant="destructive"
+    className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md hover:bg-red-700 transition-all justify-center"
+    onClick={handleDelete}
+  >
+    <TrashIcon className="h-5 w-5" />
+    Delete
+  </Button>
+
+  <Button
+    className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-green-600 hover:bg-green-700 transition-all justify-center"
+    onClick={handleExportExcel}
+  >
+    🧾 Download Excel
+  </Button>
+</div>
+
 
               </Card>
         </div>
