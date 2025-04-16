@@ -39,7 +39,18 @@ export default function UserDetailsPage() {
     }
   };
 
-  if (!user) return <div className="p-6">Loading...</div>;
+          if (!user) return <div className="p-6"> 
+            <div className="flex justify-center items-center min-h-screen flex-col gap-3.5 ">
+              <Image
+                src="/logo.png"
+                alt="Company Logo"
+                width={100}
+                height={30}
+                className="hover:opacity-80 transition"
+              />
+              <p className="text-gray-200 ml-4">Loading users...</p>
+            </div>
+          </div>;
 
   return (
     <div className="p-6 max-w-6xl mx-auto">

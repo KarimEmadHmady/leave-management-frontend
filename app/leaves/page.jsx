@@ -145,7 +145,7 @@ export default function Leaves() {
         </div>
 
         {loading ? (
-            <div className="flex justify-center items-center min-h-screen">
+            <div className="flex justify-center items-center min-h-screen flex-col gap-3.5">
             <Image
                 src="/logo.png"
                 alt="Company Logo"

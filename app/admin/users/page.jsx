@@ -6,6 +6,7 @@ import Image from "next/image";
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -17,6 +18,8 @@ const UsersPage = () => {
         setUsers(res.data);
       } catch (err) {
         console.error("Error fetching users", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchUsers();
@@ -38,38 +41,50 @@ const UsersPage = () => {
           Create User
         </Link>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
-        {users.map((user) => (
-          <Link
-            href={`/admin/users/${user._id}`}
-            key={user._id}
-            className="bg-blue-100 shadow-lg hover:shadow-xl transition-all rounded-2xl p-6 transform hover:scale-105 p-[15px]"
-          >
-            <div className="flex items-center justify-between gap-6  ">
-              <div>
-                <h2 className="text-2xl font-semibold text-blue-400">
-                  {user.name}
-                </h2>
-                <p className="text-blue-400">
-                  {user.jobTitle || "No Job Title"}
-                </p>
-                <p className="text-sm text-gray-500">{user.email}</p>
+
+      {loading ? (
+        <div className="flex justify-center items-center min-h-screen flex-col gap-3.5">
+          <Image
+            src="/logo.png"
+            alt="Company Logo"
+            width={100}
+            height={30}
+            className="hover:opacity-80 transition"
+          />
+          <p className="text-gray-200 ml-4">Loading users...</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {users.map((user) => (
+            <Link
+              href={`/admin/users/${user._id}`}
+              key={user._id}
+              className="bg-blue-100 shadow-lg hover:shadow-xl transition-all rounded-2xl p-6 transform hover:scale-105 p-[15px]"
+            >
+              <div className="flex items-center justify-between gap-6">
+                <div>
+                  <h2 className="text-2xl font-semibold text-blue-400">
+                    {user.name}
+                  </h2>
+                  <p className="text-blue-400">{user.jobTitle || "No Job Title"}</p>
+                  <p className="text-sm text-gray-500">{user.email}</p>
+                </div>
+                <div>
+                  {user.profileImage && (
+                    <Image
+                      src={user.profileImage}
+                      alt={`${user.name}'s Profile`}
+                      width={80}
+                      height={80}
+                      className="rounded-full object-cover border-4 border-blue-500 shadow-md rounded-full w-[80px] h-[80px] p-0"
+                    />
+                  )}
+                </div>
               </div>
-              <div>
-                {user.profileImage && (
-                  <Image
-                    src={user.profileImage}
-                    alt={`${user.name}'s Profile`}
-                    width={80}
-                    height={80}
-                    className="rounded-full object-cover border-4 border-blue-500 shadow-md rounded-full w-[80px] h-[80px] p-0"
-                  />
-                )}
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
