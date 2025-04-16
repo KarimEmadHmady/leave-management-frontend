@@ -97,9 +97,34 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen p-6">
+      <div className="lines">
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+      </div>
       <BackToTopButton />
+      <div className="flex justify-center items-center mb-4 gap-2.5"> 
+      <button
+          onClick={() => router.push("/")} 
+          className="py-2 px-4 bg-[#0673bc] text-white hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2"
+          >
+          Home
+      </button>
+      <button
+          onClick={() => router.push("/admin/users")} 
+          className="py-2 px-4 bg-blue-200 text-gray-800 hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2"
+          >
+          Users
+      </button>
+      <button
+          onClick={() => router.push("/admin/users/create")} 
+          className="py-2 px-4 bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2"
+          >
+          Create New User
+      </button>
+      </div>
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-200">
-        Admin Dashboard
+        Leave requests
       </h1>
       {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
 

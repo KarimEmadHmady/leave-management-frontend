@@ -63,6 +63,7 @@ export default function Leaves() {
 
     return (
         <div className="min-h-screen p-6">
+
             <BackToTopButton />
         <div className="lines">
             <div className="line"></div>
@@ -126,12 +127,20 @@ export default function Leaves() {
                 className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
                 />
             </div>
+            <div className="flex justify-between items-center gap-2">
             <button
                 type="submit"
                 className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
             >
                 Submit Request
             </button>
+            <button
+                onClick={() => router.push("/")}   
+                className="py-2 px-4 bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2"
+                >
+                Back
+            </button>
+            </div>
             </form>
         </div>
 

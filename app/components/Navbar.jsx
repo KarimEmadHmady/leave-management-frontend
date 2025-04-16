@@ -31,7 +31,7 @@ const Navbar = () => {
         <Image
           src="/logo.png"
           alt="Company Logo"
-          width={120}
+          width={90}
           height={40}
           className="hover:opacity-80 transition"
         />
@@ -40,7 +40,7 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         {user ? (
           <>
-            <span className="text-gray-300 text-sm sm:text-base">
+            <span className="text-gray-300 text-[10px] sm:text-xs ml-[5px]">
               👋 {user.name}
             </span>
 
