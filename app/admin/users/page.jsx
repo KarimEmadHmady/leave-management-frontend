@@ -60,9 +60,9 @@ const UsersPage = () => {
                   <Image
                     src={user.profileImage}
                     alt={`${user.name}'s Profile`}
-                    width={75}
-                    height={75}
-                    className="rounded-full object-cover border-4 border-blue-500 shadow-md rounded-full w-[100px] h-[100px] p-0"
+                    width={80}
+                    height={80}
+                    className="rounded-full object-cover border-4 border-blue-500 shadow-md rounded-full w-[80px] h-[80px] p-0"
                   />
                 )}
               </div>
