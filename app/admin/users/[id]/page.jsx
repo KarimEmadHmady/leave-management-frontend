@@ -128,7 +128,7 @@ export default function UserDetailsPage() {
           )}
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold text-blue-800 ">{user.name}</h2>
-            <p className="text-gray-500">{user.email}</p>
+            <p className="text-gray-500 text-[12px] sm:text-sm">{user.email}</p>
           </div>
         </div>
 
