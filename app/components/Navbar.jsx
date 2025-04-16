@@ -40,7 +40,7 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         {user ? (
           <>
-            <span className="text-gray-300 text-[10px] sm:text-xs ml-[5px]">
+            <span className="text-gray-300 text-[10px] sm:text-xs ml-[5px] text-center">
               👋 {user.name}
             </span>
 

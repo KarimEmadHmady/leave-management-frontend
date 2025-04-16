@@ -118,7 +118,7 @@ export default function AdminDashboard() {
       </button>
       <button
           onClick={() => router.push("/admin/users/create")} 
-          className="py-2 px-4 bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2"
+          className="py-2 px-4 bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2 text-[14px] sm:text-[15px]"
           >
           Create New User
       </button>
