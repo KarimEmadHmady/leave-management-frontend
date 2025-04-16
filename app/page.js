@@ -29,7 +29,6 @@ export default function Home() {
         );
   
         setLeaveBalance(res.data.leaveBalance);
-        // إضافة تحقق إذا كانت مدة التوظيف أقل من 6 أشهر
         const hireDate = new Date(res.data.hireDate);
         const currentDate = new Date();
         const monthsEmployed = (currentDate.getFullYear() - hireDate.getFullYear()) * 12 + currentDate.getMonth() - hireDate.getMonth();

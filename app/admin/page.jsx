@@ -21,21 +21,27 @@ export default function AdminDashboard() {
           router.push("/login");
           return;
         }
-  
+
         setLoading(true);
-  
-        const leaveRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/leaves`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const reversedLeaves = leaveRes.data
+
+        const leaveRes = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/leaves`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        const reversedLeaves = leaveRes.data;
         setLeaveRequests(reversedLeaves);
-  
-        const remoteRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/remote`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const reversedRemote = remoteRes.data
+
+        const remoteRes = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/remote`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        const reversedRemote = remoteRes.data;
         setRemoteWorkRequests(reversedRemote);
-  
+
         setLoading(false);
       } catch (err) {
         setError(err.response?.data?.message || "Failed to fetch data");
@@ -44,11 +50,10 @@ export default function AdminDashboard() {
     };
     fetchData();
   }, [router]);
-  
 
   const handleLeaveStatus = async (id, status) => {
     const adminComment = prompt(`Enter comment for ${status} request:`) || "";
-  
+
     try {
       const token = localStorage.getItem("token");
       const res = await axios.put(
@@ -56,8 +61,8 @@ export default function AdminDashboard() {
         { status, adminComment },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-  
-      setLeaveRequests((prevRequests) => 
+
+      setLeaveRequests((prevRequests) =>
         prevRequests.map((request) =>
           request._id === id ? { ...request, status, adminComment } : request
         )
@@ -66,10 +71,10 @@ export default function AdminDashboard() {
       setError(err.response?.data?.message || "Failed to update status");
     }
   };
-  
+
   const handleRemoteStatus = async (id, status) => {
     const adminComment = prompt(`Enter comment for ${status} request:`) || "";
-  
+
     try {
       const token = localStorage.getItem("token");
       const res = await axios.put(
@@ -77,19 +82,19 @@ export default function AdminDashboard() {
         { comment: adminComment },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-  
+
       setRemoteWorkRequests((prevRequests) =>
         prevRequests.map((request) =>
-          request._id === id ? { ...request, status, comment: adminComment } : request
+          request._id === id
+            ? { ...request, status, comment: adminComment }
+            : request
         )
       );
     } catch (err) {
       setError(err.response?.data?.message || "Failed to update status");
     }
   };
-  
-  
-  
+
   return (
     <div className="min-h-screen p-6">
       <BackToTopButton />
@@ -125,7 +130,8 @@ export default function AdminDashboard() {
                     className="bg-dives p-4 rounded-lg shadow"
                   >
                     <p>
-                      <strong>User:</strong> {request.userId.name}
+                      <strong>User:</strong>{" "}
+                      {request.userId ? request.userId.name : "N/A"}
                     </p>
                     <p>
                       <strong>Type:</strong> {request.leaveType}
@@ -184,7 +190,8 @@ export default function AdminDashboard() {
                     className="bg-dives p-4 rounded-lg shadow"
                   >
                     <p>
-                      <strong>User:</strong> {request.userId.name}
+                      <strong>User:</strong>{" "}
+                      {request.userId ? request.userId.name : "N/A"}
                     </p>
                     <p>
                       <strong>Date:</strong>{" "}
