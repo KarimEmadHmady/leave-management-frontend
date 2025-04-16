@@ -38,6 +38,11 @@ export default function EditUserPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const updatedData = { ...formData };
+
+      if (!formData.password) {
+        delete updatedData.password; // ما تبعتش الباسورد لو المستخدم سابه فاضي
+      }
       await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/user-details/${id}`, formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
@@ -190,6 +195,15 @@ export default function EditUserPage() {
               {renderInput("Qualification Name", "qualificationName")}
             </div>
           </section>
+          {/* Account Settings */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-blue-600">Account Settings</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-blue-400">
+              {renderInput("Password (leave blank to keep current)", "password", "password")}
+              {renderSelect("Role", "role", ["employee", "admin"])}
+            </div>
+          </section>
+
 
           {/* Documents */}
           <section>
