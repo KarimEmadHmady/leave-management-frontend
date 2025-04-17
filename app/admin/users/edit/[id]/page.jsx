@@ -1,3 +1,4 @@
+
 "use client";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -16,12 +17,14 @@ export default function EditUserPage() {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-
+  const [errors, setErrors] = useState({});
   const [birthDate, setBirthDate] = useState(null);
   const [nationalIDExpiry, setNationalIDExpiry] = useState(null);
   const [hireDate, setHireDate] = useState(null);
   const [contractStart, setContractStart] = useState(null);
   const [contractEnd, setContractEnd] = useState(null);
+  const [resignationDate, setResignationDate] = useState(null);
+
 
   useEffect(() => {
     setLoading(true);
@@ -37,12 +40,15 @@ export default function EditUserPage() {
         setContractStart(res.data.contractStart ? new Date(res.data.contractStart) : null);
         setContractEnd(res.data.contractEnd ? new Date(res.data.contractEnd) : null);
         setLoading(false);
+        setResignationDate(res.data.resignationDate ? new Date(res.data.resignationDate) : null);
+
       })
       .catch((err) => {
         console.error(err);
         setLoading(false);
       });
   }, [id]);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -54,21 +60,45 @@ export default function EditUserPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    const newErrors = {};
+  
+    if (formData.employeeStatus === "resigned" && !formData.resignationReason?.trim()) {
+      newErrors.resignationReason = "Please enter the resignation reason.";
+    }
+
+    if (formData.employeeStatus === "resigned" && !resignationDate) {
+      newErrors.resignationDate = "Please enter the resignation Date.";
+    }
+  
+  
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return; 
+    }
+  
     try {
       const updatedData = { ...formData };
-
+  
       if (!formData.password) {
         delete updatedData.password;
       }
 
+      if (resignationDate) {
+        updatedData.resignationDate = resignationDate.toISOString().split("T")[0];
+      }
+  
       await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/user-details/${id}`, updatedData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
+  
       router.push("/admin/users");
     } catch (err) {
       console.error(err);
     }
   };
+  
+  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -229,8 +259,52 @@ export default function EditUserPage() {
               {renderInput("Age", "age", "number")}
               {renderInput("National ID", "nationalID")}
               {renderInput("National ID Expiry", "nationalIDExpiry", "date")}
+              {renderInput("Employee Code", "employeeCode")} 
             </div>
           </section>
+
+          {/* Employee Status and resigned Reason */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-blue-600">Employee Status</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-blue-400">
+            {renderSelect("Employee Status", "employeeStatus", ["active", "resigned"])}
+            {formData.employeeStatus === "resigned" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  {renderInput("Resigned Reason", "resignationReason")}
+                  {errors.resignationReason && (
+                    <p className="text-red-600 text-sm mt-1">{errors.resignationReason}</p>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="resignationDate" className="block text-sm font-medium text-gray-700 mb-1">
+                    Resignation Date
+                  </label>
+                  <DatePicker
+                    selected={resignationDate}
+                    onChange={(date) => {
+                      setResignationDate(date);
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        resignationDate: date?.toISOString().split("T")[0],
+                      }));
+                    }}
+                    dateFormat="yyyy-MM-dd"
+                    locale="en-GB"
+                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                  />
+
+                    {errors.resignationDate && (
+                      <p className="text-red-600 text-sm mt-1">{errors.resignationDate}</p>
+                    )}
+                </div>
+              </div>
+            )}
+
+            </div>
+          </section>
+
+
 
           {/* Contact Info */}
           <section>

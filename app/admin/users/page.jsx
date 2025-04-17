@@ -7,6 +7,7 @@ import Image from "next/image";
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -25,21 +26,31 @@ const UsersPage = () => {
     fetchUsers();
   }, []);
 
+  const filteredUsers = users.filter((user) =>
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="p-6">
-      <div className="lines">
-        <div className="line"></div>
-        <div className="line"></div>
-        <div className="line"></div>
-      </div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-blue-800 ">All Users</h1>
+        <h1 className="text-3xl font-bold text-blue-800">All Users</h1>
         <Link
           href="/admin/users/create"
           className="bg-blue-600 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-700 transition-all duration-300"
         >
           Create User
         </Link>
+      </div>
+
+      {/* حقل البحث */}
+      <div className="mb-6">
+        <input
+          type="text"
+          placeholder="Search by email..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full sm:w-96 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
 
       {loading ? (
@@ -55,7 +66,7 @@ const UsersPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {users.map((user) => (
+          {filteredUsers.map((user) => (
             <Link
               href={`/admin/users/${user._id}`}
               key={user._id}
@@ -69,15 +80,21 @@ const UsersPage = () => {
                   <p className="text-blue-400">{user.jobTitle || "No Job Title"}</p>
                   <p className="text-sm text-gray-500">{user.email}</p>
                 </div>
-                <div>
+                <div className="relative w-[80px] h-[80px]">
                   {user.profileImage && (
                     <Image
                       src={user.profileImage}
                       alt={`${user.name}'s Profile`}
                       width={80}
                       height={80}
-                      className="rounded-full object-cover border-4 border-blue-500 shadow-md rounded-full w-[80px] h-[80px] p-0"
+                      className="rounded-full object-cover border-4 border-blue-500 shadow-md w-full h-full"
                     />
+                  )}
+                  {user.employeeStatus === "active" && (
+                    <span className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></span>
+                  )}
+                  {user.employeeStatus === "resigned" && (
+                    <span className="absolute bottom-1 right-1 w-4 h-4 bg-red-500 border-2 border-white rounded-full"></span>
                   )}
                 </div>
               </div>

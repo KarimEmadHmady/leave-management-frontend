@@ -155,27 +155,37 @@ export default function UserDetailsPage() {
           <Info label="Insurance Status" value={user.insuranceStatus} />
           <Info label="Insurance Number" value={user.insuranceNumber} />
           <Info label="Qualification" value={user.qualificationName} />
+          <Info label="Employee Code" value={user.employeeCode} /> 
+          <Info label="Employment Status" value={user.employeeStatus} /> 
+          {user.employeeStatus === "resigned" && (
+            <>
+              <Info label="Resignation Reason" value={user.resignationReason} />
+              <Info label="Resignation Date" value={formatDate(user.resignationDate)} />
+            </>
+          )}
+
         </div>
 
         {/* Documents */}
         <Section title="Documents Availability">
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 list-disc ml-6 text-sm text-blue-800">
-            {[
-              ["Qualification Original", user.qualificationOriginalAvailable],
-              ["Birth Certificate", user.birthCertificateAvailable],
-              ["Military Service", user.militaryServiceAvailable],
-              ["Criminal Record", user.criminalRecordAvailable],
-              ["Work Card", user.workCardAvailable],
-              ["Insurance Print", user.insurancePrintAvailable],
-              ["National ID Copy", user.nationalIDCopyAvailable],
-              ["Skills Certificate", user.skillsCertificateAvailable],
-            ].map(([label, available]) => (
-              <li key={label}>
-                {label}: {available ? "✅" : "❌"}
-              </li>
-            ))}
-          </ul>
-        </Section>
+  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 list-disc ml-6 text-sm text-blue-800">
+    {[
+      ["Qualification", user.qualificationOriginalAvailable],
+      ["Birth Certificate", user.birthCertificateAvailable],
+      ["Military Service", user.militaryServiceAvailable],
+      ["Criminal Record", user.criminalRecordAvailable],
+      ["Work Card", user.workCardAvailable],
+      ["Insurance Print", user.insurancePrintAvailable],
+      ["National ID Copy", user.nationalIDCopyAvailable],
+      ["Skills Certificate", user.skillsCertificateAvailable],
+    ].map(([label, available]) => (
+      <li key={label}>
+        {label}: {available ? "✅" : "❌"}
+      </li>
+    ))}
+  </ul>
+</Section>
+
 
         {/* Leave Balance */}
         <Section title="Leave Balance">
@@ -228,7 +238,7 @@ export default function UserDetailsPage() {
 function Info({ label, value }) {
   return (
     <div className="bg-gray-50 p-3 rounded border">
-      <span className="font-medium">{label}:</span> {value || "N/A"}
+      <span className="font-medium text-blue-800">{label}:</span> {value || "N/A"}
     </div>
   );
 }
@@ -236,11 +246,12 @@ function Info({ label, value }) {
 function Section({ title, children }) {
   return (
     <div>
-      <h3 className="text-lg font-semibold text-gray-800 mb-2">{title}</h3>
+      <h3 className="text-lg font-semibold text-blue-800 mb-2">{title}</h3>
       {children}
     </div>
   );
 }
+
 
 function formatDate(dateStr) {
   if (!dateStr) return "N/A";
