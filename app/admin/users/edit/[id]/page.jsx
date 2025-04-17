@@ -55,30 +55,37 @@ export default function EditUserPage() {
     }
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    const formDataWithImage = new FormData();
-    formDataWithImage.append("profileImage", file);
-
-    axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/user-details/upload/${id}`, formDataWithImage, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setFormData((prevData) => ({
-          ...prevData,
-          profileImage: res.data.profileImage,
-        }));
-        alert("Image uploaded successfully to Cloudinary!");
-      })
-      .catch((err) => {
-        console.error("Error uploading image:", err.response?.data || err.message);
-        alert("Error uploading image: " + (err.response?.data.message || err.message));
-      });
+    if (!file) return;
+  
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+  
+    try {
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData
+      );
+  
+      const imageUrl = res.data.secure_url;
+  
+      // حفظ رابط الصورة في backend
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/user-details/${id}`,
+        { profileImage: imageUrl },
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+      );
+  
+      setFormData((prev) => ({ ...prev, profileImage: imageUrl }));
+      alert("Image uploaded successfully!");
+    } catch (err) {
+      console.error("Upload error:", err);
+      alert("Error uploading image");
+    }
   };
+  
 
 
   const renderInput = (label, name, type = "text") => (
