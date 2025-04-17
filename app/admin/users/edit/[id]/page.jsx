@@ -5,28 +5,42 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import enGB from "date-fns/locale/en-GB";
+registerLocale("en-GB", enGB);
 
 export default function EditUserPage() {
   const { id } = useParams();
   const router = useRouter();
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
+  const [birthDate, setBirthDate] = useState(null);
+  const [nationalIDExpiry, setNationalIDExpiry] = useState(null);
+  const [hireDate, setHireDate] = useState(null);
+  const [contractStart, setContractStart] = useState(null);
+  const [contractEnd, setContractEnd] = useState(null);
 
   useEffect(() => {
-    setLoading(true); 
+    setLoading(true);
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/user-details/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((res) => {
         setFormData(res.data);
-        setLoading(false);   
+        setBirthDate(res.data.birthDate ? new Date(res.data.birthDate) : null);
+        setNationalIDExpiry(res.data.nationalIDExpiry ? new Date(res.data.nationalIDExpiry) : null);
+        setHireDate(res.data.hireDate ? new Date(res.data.hireDate) : null);
+        setContractStart(res.data.contractStart ? new Date(res.data.contractStart) : null);
+        setContractEnd(res.data.contractEnd ? new Date(res.data.contractEnd) : null);
+        setLoading(false);
       })
       .catch((err) => {
         console.error(err);
-        setLoading(false);     
+        setLoading(false);
       });
   }, [id]);
 
@@ -44,9 +58,10 @@ export default function EditUserPage() {
       const updatedData = { ...formData };
 
       if (!formData.password) {
-        delete updatedData.password;    
+        delete updatedData.password;
       }
-      await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/user-details/${id}`, formData, {
+
+      await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/user-details/${id}`, updatedData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       router.push("/admin/users");
@@ -80,31 +95,65 @@ export default function EditUserPage() {
       });
   };
 
-
-  const renderInput = (label, name, type = "text") => (
-    <div className="relative">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-      <input
-        type={type === "password" && showPassword ? "text" : type}
-        name={name}
-        value={formData[name] || ""}
-        onChange={handleChange}
-        id={name}
-        className="w-full border p-2 rounded pr-10"
-      />
-      {type === "password" && (
-        <span
-          onClick={togglePasswordVisibility}
-          className="absolute right-3 top-9 cursor-pointer text-blue-500"
-        >
-          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-        </span>
-      )}
-    </div>
-  );
-  
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
+  const renderInput = (label, name, type = "text") => {
+    if (type === "date") {
+      const dateMap = {
+        birthDate,
+        nationalIDExpiry,
+        hireDate,
+        contractStart,
+        contractEnd,
+      };
+
+      const setDateMap = {
+        birthDate: setBirthDate,
+        nationalIDExpiry: setNationalIDExpiry,
+        hireDate: setHireDate,
+        contractStart: setContractStart,
+        contractEnd: setContractEnd,
+      };
+
+      return (
+        <div>
+          <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+          <DatePicker
+            selected={dateMap[name]}
+            onChange={(date) => {
+              setDateMap[name](date);
+              setFormData({ ...formData, [name]: date?.toISOString().split("T")[0] });
+            }}
+            dateFormat="yyyy-MM-dd"
+            locale="en-GB"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+          />
+        </div>
+      );
+    }
+
+    return (
+      <div className="relative">
+        <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+        <input
+          type={type === "password" && showPassword ? "text" : type}
+          name={name}
+          value={formData[name] || ""}
+          onChange={handleChange}
+          id={name}
+          className="w-full border p-2 rounded pr-10"
+        />
+        {type === "password" && (
+          <span
+            onClick={togglePasswordVisibility}
+            className="absolute right-3 top-9 cursor-pointer text-blue-500"
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </span>
+        )}
+      </div>
+    );
+  };
 
   const renderSelect = (label, name, options) => (
     <div>
@@ -139,29 +188,27 @@ export default function EditUserPage() {
   );
 
   return (
-<div className="max-w-5xl m-[15px] text-white bg-blue-100 rounded-[20px] p-[25px] sm:m-auto ">
+    <div className="max-w-5xl m-[15px] text-white bg-blue-100 rounded-[20px] p-[25px] sm:m-auto ">
       <div className="lines">
         <div className="line"></div>
         <div className="line"></div>
         <div className="line"></div>
       </div>
       <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">Edit User</h2>
-      
-      {/* Loader Spinner */}
+
       {loading ? (
-            <div className="flex justify-center items-center min-h-screen flex-col gap-3.5 ">
-              <Image
-                src="/logo.png"
-                alt="Company Logo"
-                width={100}
-                height={30}
-                className="hover:opacity-80 transition  "
-              />
-              <p className="text-black ml-4">Loading users...</p>
-            </div>
+        <div className="flex justify-center items-center min-h-screen flex-col gap-3.5 ">
+          <Image
+            src="/logo.png"
+            alt="Company Logo"
+            width={100}
+            height={30}
+            className="hover:opacity-80 transition  "
+          />
+          <p className="text-black ml-4">Loading users...</p>
+        </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-10">
-          {/* Profile Image */}
           <div className="text-center">
             {formData.profileImage && (
               <img src={formData.profileImage} alt="Profile" className="mx-auto  object-cover rounded-full mb-4 w-[90px] h-[90px] sm:w-[120px] sm:h-[120px]" />
@@ -210,6 +257,7 @@ export default function EditUserPage() {
               {renderInput("Qualification Name", "qualificationName")}
             </div>
           </section>
+
           {/* Account Settings */}
           <section>
             <h3 className="text-xl font-semibold mb-4 text-blue-600">Account Settings</h3>
@@ -218,7 +266,6 @@ export default function EditUserPage() {
               {renderSelect("Role", "role", ["employee", "admin"])}
             </div>
           </section>
-
 
           {/* Documents */}
           <section>
@@ -252,3 +299,4 @@ export default function EditUserPage() {
     </div>
   );
 }
+

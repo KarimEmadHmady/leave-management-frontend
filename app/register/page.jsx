@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -6,12 +7,19 @@ import { useRouter } from "next/navigation";
 import { useUser } from "../context/UserContext";
 import { Eye, EyeOff } from "lucide-react"; 
 
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import enGB from "date-fns/locale/en-GB";
+
+registerLocale("en-GB", enGB);
+
+
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [hireDate, setHireDate] = useState("");
+  const [hireDate, setHireDate] = useState(null);
   const [error, setError] = useState("");
   const router = useRouter();
   const { setUser } = useUser();
@@ -25,7 +33,7 @@ export default function Register() {
         name,
         email,
         password,
-        hireDate,
+        hireDate: hireDate?.toISOString(),
       });
 
       if (typeof window !== "undefined") {
@@ -96,14 +104,17 @@ export default function Register() {
           </div>
           <div className="mb-6">
             <label className="block text-gray-200">Hire Date</label>
-            <input
-              type="date"
-              value={hireDate}
-              onChange={(e) => setHireDate(e.target.value)}
+            <DatePicker
+              selected={hireDate}
+              onChange={(date) => setHireDate(date)}
+              dateFormat="dd/MM/yyyy"
+              locale="en-GB"
               className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
+              placeholderText="Select date"
               required
             />
           </div>
+
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"

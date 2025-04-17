@@ -95,6 +95,11 @@ export default function AdminDashboard() {
     }
   };
 
+  const formatDate = (date) => {
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+    return new Date(date).toLocaleDateString("en-GB", options);
+  };
+
   return (
     <div className="min-h-screen p-6">
       <div className="lines">
@@ -103,25 +108,25 @@ export default function AdminDashboard() {
         <div className="line"></div>
       </div>
       <BackToTopButton />
-      <div className="flex justify-center items-center mb-4 gap-2.5"> 
-      <button
-          onClick={() => router.push("/")} 
+      <div className="flex justify-center items-center mb-4 gap-2.5">
+        <button
+          onClick={() => router.push("/")}
           className="py-2 px-4 bg-[#0673bc] text-white hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2"
-          >
+        >
           Home
-      </button>
-      <button
-          onClick={() => router.push("/admin/users")} 
+        </button>
+        <button
+          onClick={() => router.push("/admin/users")}
           className="py-2 px-4 bg-blue-200 text-gray-800 hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2"
-          >
+        >
           Users
-      </button>
-      <button
-          onClick={() => router.push("/admin/users/create")} 
+        </button>
+        <button
+          onClick={() => router.push("/admin/users/create")}
           className="py-2 px-4 bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2 text-[14px] sm:text-[15px]"
-          >
+        >
           Create New User
-      </button>
+        </button>
       </div>
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-200">
         Leave requests
@@ -163,11 +168,11 @@ export default function AdminDashboard() {
                     </p>
                     <p>
                       <strong>Start Date:</strong>{" "}
-                      {new Date(request.startDate).toLocaleDateString()}
+                      {formatDate(request.startDate)}
                     </p>
                     <p>
                       <strong>End Date:</strong>{" "}
-                      {new Date(request.endDate).toLocaleDateString()}
+                      {formatDate(request.endDate)}
                     </p>
                     <p>
                       <strong>Reason:</strong> {request.reason || "N/A"}
@@ -220,7 +225,7 @@ export default function AdminDashboard() {
                     </p>
                     <p>
                       <strong>Date:</strong>{" "}
-                      {new Date(request.date).toLocaleDateString()}
+                      {formatDate(request.date)}
                     </p>
                     <p>
                       <strong>Reason:</strong> {request.reason}

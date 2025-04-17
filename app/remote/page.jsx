@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -5,10 +7,15 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image"; 
 import BackToTopButton from "../components/BackToTopButton";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import enGB from "date-fns/locale/en-GB";
+
+registerLocale("en-GB", enGB);
 
 export default function RemoteWork() {
     const [requests, setRequests] = useState([]);
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState(null); 
     const [reason, setReason] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -47,7 +54,7 @@ export default function RemoteWork() {
             );
             setSuccess("Remote work request submitted!");
             setRequests([res.data, ...requests]);
-            setDate("");
+            setDate(null);
             setReason("");
             setError("");
         } catch (err) {
@@ -77,10 +84,11 @@ export default function RemoteWork() {
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-gray-200">Date</label>
-                        <input
-                            type="date"
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
+                        <DatePicker
+                            selected={date}
+                            onChange={(date) => setDate(date)}
+                            dateFormat="yyyy-MM-dd"
+                            locale="en-GB" // تحديد اللغة
                             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
                             required
                         />
@@ -101,7 +109,7 @@ export default function RemoteWork() {
                         Submit Request
                     </button>
                     <button
-                        onClick={() => router.push("/")} // الذهاب إلى الصفحة الرئيسية
+                        onClick={() => router.push("/")}  
                         className="py-2 px-4 bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2"
                         >
                         Back
@@ -159,3 +167,4 @@ export default function RemoteWork() {
         </div>
     );
 }
+

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import BackToTopButton from "../components/BackToTopButton";
+import DatePicker from "react-datepicker";
 
 export default function Leaves() {
     const [leaveRequests, setLeaveRequests] = useState([]);
@@ -101,22 +102,26 @@ export default function Leaves() {
             </div>
             <div className="mb-4">
                 <label className="block text-gray-200">Start Date</label>
-                <input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
-                required
+                <DatePicker
+                    selected={startDate ? new Date(startDate) : null}
+                onChange={(date) =>
+                    setStartDate(date.toISOString().split("T")[0])
+                }
+                dateFormat="yyyy-MM-dd"
+                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200 bg-transparent"
+                placeholderText="Select start date"
                 />
             </div>
             <div className="mb-4">
                 <label className="block text-gray-200">End Date</label>
-                <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
-                required
+                <DatePicker
+                    selected={endDate ? new Date(endDate) : null}
+                    onChange={(date) =>
+                        setEndDate(date.toISOString().split("T")[0])
+                    }
+                    dateFormat="yyyy-MM-dd"
+                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200 bg-transparent"
+                    placeholderText="Select end date"
                 />
             </div>
             <div className="mb-4">
@@ -174,12 +179,13 @@ export default function Leaves() {
                     </p>
                     <p>
                         <strong>Start Date:</strong>{" "}
-                        {new Date(request.startDate).toISOString().split("T")[0]}
-                    </p>
-                    <p>
+                        {new Date(request.startDate).toLocaleDateString("en-GB")}
+                        </p>
+                        <p>
                         <strong>End Date:</strong>{" "}
-                        {new Date(request.endDate).toLocaleDateString()}
+                        {new Date(request.endDate).toLocaleDateString("en-GB")}
                     </p>
+
                     <p>
                         <strong>Reason:</strong> {request.reason || "N/A"}
                     </p>

@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "./context/UserContext";
 import Navbar from "./components/Navbar";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

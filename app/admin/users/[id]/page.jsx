@@ -4,10 +4,10 @@ import { useParams, useRouter } from "next/navigation";
 import { Card } from "../../../../components/ui/card";
 import { Button } from "../../../../components/ui/button";
 import axios from "axios";
-import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid"; 
-import { toast } from "react-toastify"; 
-import "react-toastify/dist/ReactToastify.css"; 
-import Image from "next/image"; 
+import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
@@ -37,13 +37,13 @@ export default function UserDetailsPage() {
       router.push("/admin/users");
     } catch (err) {
       console.error("Failed to delete user:", err);
-      toast.error("Something went wrong while deleting the user."); 
+      toast.error("Something went wrong while deleting the user.");
     }
   };
 
   const handleExportExcel = () => {
     if (!user) return;
-  
+
     const data = [
       {
         Name: user.name,
@@ -68,11 +68,9 @@ export default function UserDetailsPage() {
         InsuranceStatus: user.insuranceStatus,
         InsuranceNumber: user.insuranceNumber,
         Qualification: user.qualificationName,
-        // Leave balance
         AnnualLeave: user.leaveBalance?.annual,
         SickLeave: user.leaveBalance?.sick,
         UnpaidLeave: user.leaveBalance?.unpaid,
-        // Documents
         QualificationOriginal: user.qualificationOriginalAvailable ? "Yes" : "No",
         BirthCertificate: user.birthCertificateAvailable ? "Yes" : "No",
         MilitaryService: user.militaryServiceAvailable ? "Yes" : "No",
@@ -83,56 +81,59 @@ export default function UserDetailsPage() {
         SkillsCertificate: user.skillsCertificateAvailable ? "Yes" : "No",
       },
     ];
-  
+
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "User Details");
-  
+
     const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
     const dataBlob = new Blob([excelBuffer], { type: "application/octet-stream" });
     saveAs(dataBlob, `${user.name.replace(/\s+/g, "_")}_Details.xlsx`);
   };
 
-          if (!user) return <div className="p-6"> 
-            <div className="flex justify-center items-center min-h-screen flex-col gap-3.5 ">
-              <Image
-                src="/logo.png"
-                alt="Company Logo"
-                width={100}
-                height={30}
-                className="hover:opacity-80 transition"
-              />
-              <p className="text-gray-200 ml-4">Loading users...</p>
-            </div>
-          </div>;
+  if (!user)
+    return (
+      <div className="p-6">
+        <div className="flex justify-center items-center min-h-screen flex-col gap-3.5 ">
+          <Image
+            src="/logo.png"
+            alt="Company Logo"
+            width={100}
+            height={30}
+            className="hover:opacity-80 transition"
+          />
+          <p className="text-gray-200 ml-4">Loading users...</p>
+        </div>
+      </div>
+    );
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-            <div className="lines">
+      <div className="lines">
         <div className="line"></div>
         <div className="line"></div>
         <div className="line"></div>
       </div>
       <Card className="p-8 bg-blue-100 shadow-lg rounded-xl space-y-8">
-        {/* Header with Image */}
+        {/* Header */}
         <div className="flex items-center gap-6">
           {user.profileImage && (
             <Image
-              src={user.profileImage} 
+              src={user.profileImage}
               alt="Profile"
-              width={100} 
-              height={100} 
-              className="object-cover rounded-full border-2 shadow-md p-0 w-[75px] h-[75px] sm:w-[100px] sm:h-[100px]"
-              priority 
+              width={100}
+              height={100}
+              className="object-cover rounded-full border-2 shadow-md w-[75px] h-[75px] sm:w-[100px] sm:h-[100px]"
+              priority
             />
           )}
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-blue-800 ">{user.name}</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-blue-800">{user.name}</h2>
             <p className="text-gray-500 text-[12px] sm:text-sm">{user.email}</p>
           </div>
         </div>
 
-        {/* Info Grid */}
+        {/* Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-blue-400">
           <Info label="Role" value={user.role} />
           <Info label="Job Title" value={user.jobTitle} />
@@ -156,11 +157,10 @@ export default function UserDetailsPage() {
           <Info label="Qualification" value={user.qualificationName} />
         </div>
 
-        {/* Documents Section */}
+        {/* Documents */}
         <Section title="Documents Availability">
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 list-disc ml-6 text-sm text-blue-800">
-
-            {[  
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 list-disc ml-6 text-sm text-blue-800">
+            {[
               ["Qualification Original", user.qualificationOriginalAvailable],
               ["Birth Certificate", user.birthCertificateAvailable],
               ["Military Service", user.militaryServiceAvailable],
@@ -177,7 +177,7 @@ export default function UserDetailsPage() {
           </ul>
         </Section>
 
-        {/* Leave Balance Section */}
+        {/* Leave Balance */}
         <Section title="Leave Balance">
           <ul className="list-disc ml-6 text-blue-800">
             <li>Annual: {user.leaveBalance?.annual}</li>
@@ -187,9 +187,9 @@ export default function UserDetailsPage() {
         </Section>
 
         {/* Buttons */}
-        <div className="flex flex-wrap gap-3 mt-8 align-center justify-center">
+        <div className="flex flex-wrap gap-3 mt-8 justify-center">
           <Button
-            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-blue-600 hover:bg-blue-700 transition-all justify-center"
+            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-blue-600 hover:bg-blue-700"
             onClick={() => router.push(`/admin/users/edit/${user._id}`)}
           >
             <PencilIcon className="h-5 w-5" />
@@ -197,16 +197,15 @@ export default function UserDetailsPage() {
           </Button>
 
           <Button
-            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-green-600 hover:bg-green-700 transition-all justify-center"
+            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-green-600 hover:bg-green-700"
             onClick={handleExportExcel}
           >
             🧾 Download Excel
           </Button>
 
-
           <Button
             variant="destructive"
-            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md hover:bg-red-700 transition-all justify-center"
+            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md hover:bg-red-700"
             onClick={handleDelete}
           >
             <TrashIcon className="h-5 w-5" />
@@ -215,22 +214,17 @@ export default function UserDetailsPage() {
 
           <Button
             variant="secondary"
-            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-sm hover:bg-gray-200 transition-all justify-center"
+            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-sm hover:bg-gray-200"
             onClick={() => router.back()}
           >
             Back
           </Button>
-
-
         </div>
-
-
-              </Card>
-        </div>
+      </Card>
+    </div>
   );
 }
 
-// Components
 function Info({ label, value }) {
   return (
     <div className="bg-gray-50 p-3 rounded border">
@@ -249,5 +243,7 @@ function Section({ title, children }) {
 }
 
 function formatDate(dateStr) {
-  return dateStr ? new Date(dateStr).toLocaleDateString() : "N/A";
+  if (!dateStr) return "N/A";
+  const date = new Date(dateStr);
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 }
