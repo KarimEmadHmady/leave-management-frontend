@@ -46,7 +46,7 @@ const UsersPage = () => {
       <div className="mb-6">
         <input
           type="text"
-          placeholder="Search by email..."
+          placeholder="Search by Name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full sm:w-96 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
