@@ -34,7 +34,7 @@ export default function Home() {
         const monthsEmployed = (currentDate.getFullYear() - hireDate.getFullYear()) * 12 + currentDate.getMonth() - hireDate.getMonth();
   
         if (monthsEmployed < 6) {
-          setError("You must be employed for at least 6 months to request leave");
+          setError("You must be employed for at least 3 months to request leave");
         }
         setLoading(false);
       } catch (error) {
