@@ -24,6 +24,7 @@ export default function EditUserPage() {
   const [contractEnd, setContractEnd] = useState(null);
   const [resignationDate, setResignationDate] = useState(null);
   const [imageError, setImageError] = useState(""); // State to manage image upload error
+  const [generalError, setGeneralError] = useState(""); // State to manage general errors
 
   useEffect(() => {
     setLoading(true);
@@ -70,13 +71,13 @@ export default function EditUserPage() {
       newErrors.resignationDate = "Please enter the resignation Date.";
     }
   
-  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return; 
     }
   
     try {
+      setGeneralError("");
       const updatedData = { ...formData };
   
       if (!formData.password) {
@@ -94,6 +95,7 @@ export default function EditUserPage() {
       router.push("/admin/users");
     } catch (err) {
       console.error(err);
+      setGeneralError(err.response?.data?.message || err.message || "Error updating user");
     }
   };
   
@@ -104,6 +106,7 @@ export default function EditUserPage() {
     const formDataWithImage = new FormData();
     formDataWithImage.append("profileImage", file);
     setImageError(""); // reset error before upload
+    setGeneralError(""); // reset general error before upload
 
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/api/user-details/upload/${id}`, formDataWithImage, {
@@ -123,6 +126,7 @@ export default function EditUserPage() {
       .catch((err) => {
         console.error("Error uploading image:", err.response?.data || err.message);
         setImageError(err.response?.data.message || err.message || "Error uploading image");
+        setGeneralError(err.response?.data.message || err.message || "Error uploading image");
       });
   };
 
@@ -240,6 +244,11 @@ export default function EditUserPage() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-10">
+          {generalError && (
+            <div className="text-center mb-4">
+              <p className="text-red-600 text-base font-semibold">{generalError}</p>
+            </div>
+          )}
           <div className="text-center">
             {formData.profileImage && (
               <img src={formData.profileImage} alt="Profile" className="mx-auto  object-cover rounded-full mb-4 w-[90px] h-[90px] sm:w-[120px] sm:h-[120px]" />
