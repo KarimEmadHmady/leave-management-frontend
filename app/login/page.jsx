@@ -33,7 +33,7 @@ export default function Login() {
         router.push("/");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
+      setError("Something went wrong");
     }
   };
 
