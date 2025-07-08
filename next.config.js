@@ -1,12 +1,8 @@
+// next.config.js
 module.exports = {
-    images: {
-      domains: ['res.cloudinary.com'], // إضافة نطاق Cloudinary
-    },
-  };
-  
-
-
-  module.exports = {
+  images: {
+    domains: ['res.cloudinary.com'], // إعدادات الصور
+  },
   async rewrites() {
     return [
       {
