@@ -33,7 +33,7 @@ const UsersPage = () => {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-[#1fabaa]">All employees</h1>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1fabaa]">All employees</h1>
         <Link
           href="/admin/users/create"
           className="bg-[#1fabaa] text-white px-6 py-2 rounded-md shadow-md hover:bg-[#009897] transition-all duration-300"

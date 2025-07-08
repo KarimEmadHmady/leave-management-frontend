@@ -51,7 +51,7 @@ export default function CreateUserPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-8 bg-[#eee] rounded-2xl shadow-md">
+    <div className="max-w-md mx-auto mt-10 p-8 bg-[#eee] rounded-2xl shadow-md sm:mx-auto mx-[15px]">
       <div className="lines">
         <div className="line"></div>
         <div className="line"></div>
