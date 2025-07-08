@@ -25,6 +25,7 @@ export default function EditUserPage() {
   const [resignationDate, setResignationDate] = useState(null);
   const [imageError, setImageError] = useState(""); // State to manage image upload error
   const [generalError, setGeneralError] = useState(""); // State to manage general errors
+  const [leaveBalance, setLeaveBalance] = useState({ annual: 21, sick: 10, unpaid: 0 });
 
   useEffect(() => {
     setLoading(true);
@@ -41,6 +42,7 @@ export default function EditUserPage() {
         setContractEnd(res.data.contractEnd ? new Date(res.data.contractEnd) : null);
         setLoading(false);
         setResignationDate(res.data.resignationDate ? new Date(res.data.resignationDate) : null);
+        setLeaveBalance(res.data.leaveBalance || { annual: 21, sick: 10, unpaid: 0 });
 
       })
       .catch((err) => {
@@ -56,6 +58,15 @@ export default function EditUserPage() {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
+  };
+
+  const handleLeaveBalanceChange = (e) => {
+    const { name, value } = e.target;
+    setLeaveBalance((prev) => ({ ...prev, [name]: Number(value) }));
+    setFormData((prev) => ({
+      ...prev,
+      leaveBalance: { ...prev.leaveBalance, [name]: Number(value) },
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -79,6 +90,7 @@ export default function EditUserPage() {
     try {
       setGeneralError("");
       const updatedData = { ...formData };
+      updatedData.leaveBalance = leaveBalance;
   
       if (!formData.password) {
         delete updatedData.password;
@@ -150,6 +162,8 @@ export default function EditUserPage() {
         contractEnd: setContractEnd,
       };
 
+      // Special config for birthDate
+      const isBirthDate = name === "birthDate";
       return (
         <div>
           <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
@@ -162,6 +176,12 @@ export default function EditUserPage() {
             dateFormat="yyyy-MM-dd"
             locale="en-GB"
             className="w-full p-2  bg-white rounded focus:outline-none focus:ring-2 focus:ring-[#1fabaa] text-gray-900"
+            showYearDropdown={isBirthDate}
+            showMonthDropdown={isBirthDate}
+            scrollableYearDropdown={isBirthDate}
+            yearDropdownItemNumber={100}
+            placeholderText={isBirthDate ? "YYYY-MM-DD" : undefined}
+            maxDate={isBirthDate ? new Date() : undefined}
           />
         </div>
       );
@@ -252,7 +272,8 @@ export default function EditUserPage() {
           <div className="text-center">
             {formData.profileImage && (
               <img src={formData.profileImage} alt="Profile" className="mx-auto  object-cover rounded-full mb-4 w-[90px] h-[90px] sm:w-[120px] sm:h-[120px]" />
-            )}
+            )
+            }
             <input type="file" name="profileImage" onChange={handleImageChange} className="text-[#1fabaa]" />
             {imageError && (
               <p className="text-red-600 text-sm mt-2">{imageError}</p>
@@ -342,6 +363,49 @@ export default function EditUserPage() {
               {renderSelect("Insurance Status", "insuranceStatus", ["insured", "not_insured"])}
               {renderInput("Insurance Number", "insuranceNumber")}
               {renderInput("Qualification Name", "qualificationName")}
+            </div>
+          </section>
+
+          {/* Leave Balance */}
+          <section>
+            <h3 className="text-xl font-semibold mb-4 text-[#1fabaa]">Leave Balance</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-[#1fabaa]">
+              <div>
+                <label htmlFor="annual" className="block text-sm font-medium text-gray-700 mb-1">Annual Leave</label>
+                <input
+                  type="number"
+                  name="annual"
+                  id="annual"
+                  value={leaveBalance.annual}
+                  onChange={handleLeaveBalanceChange}
+                  className="w-full p-2 rounded bg-white text-gray-900"
+                  min={0}
+                />
+              </div>
+              <div>
+                <label htmlFor="sick" className="block text-sm font-medium text-gray-700 mb-1">Sick Leave</label>
+                <input
+                  type="number"
+                  name="sick"
+                  id="sick"
+                  value={leaveBalance.sick}
+                  onChange={handleLeaveBalanceChange}
+                  className="w-full p-2 rounded bg-white text-gray-900"
+                  min={0}
+                />
+              </div>
+              <div>
+                <label htmlFor="unpaid" className="block text-sm font-medium text-gray-700 mb-1">Unpaid Leave</label>
+                <input
+                  type="number"
+                  name="unpaid"
+                  id="unpaid"
+                  value={leaveBalance.unpaid}
+                  onChange={handleLeaveBalanceChange}
+                  className="w-full p-2 rounded bg-white text-gray-900"
+                  min={0}
+                />
+              </div>
             </div>
           </section>
 
