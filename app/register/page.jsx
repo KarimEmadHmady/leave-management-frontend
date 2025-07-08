@@ -72,7 +72,7 @@ export default function Register() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#1fabaa] text-gray-200"
               required
             />
           </div>
@@ -82,7 +82,7 @@ export default function Register() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#1fabaa] text-gray-200"
               required
             />
           </div>
@@ -92,7 +92,7 @@ export default function Register() {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 pr-10 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200 bg-transparent"
+              className="w-full p-2 pr-10 border rounded focus:outline-none focus:ring-2 focus:ring-[#1fabaa] text-gray-200 bg-transparent"
               required
             />
             <span
@@ -109,7 +109,7 @@ export default function Register() {
               onChange={(date) => setHireDate(date)}
               dateFormat="dd/MM/yyyy"
               locale="en-GB"
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#1fabaa] text-gray-200"
               placeholderText="Select date"
               required
             />
