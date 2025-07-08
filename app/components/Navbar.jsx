@@ -59,7 +59,7 @@ const Navbar = () => {
                   className="flex items-center gap-2 cursor-pointer hover:text-gray-400 transition text-sm sm:text-base"
                 >
                   <FaUsers size={18} className="sm:w-5 sm:h-5" />
-                  <span className="hidden sm:inline">All Users</span>
+                  <span className="hidden sm:inline">All employees</span>
                 </div>
               </>
             )}
@@ -76,7 +76,7 @@ const Navbar = () => {
           <>
             <button
               onClick={() => router.push("/login")}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base"
+              className="bg-[#777] hover:bg-[#333] text-white px-4 py-2 rounded-lg transition text-sm sm:text-base"
             >
               Login
             </button>

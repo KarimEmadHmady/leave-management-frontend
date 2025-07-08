@@ -156,7 +156,7 @@ export default function EditUserPage() {
             }}
             dateFormat="yyyy-MM-dd"
             locale="en-GB"
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+            className="w-full p-2  bg-white rounded focus:outline-none focus:ring-2 focus:ring-[#1fabaa] text-gray-900"
           />
         </div>
       );
@@ -171,12 +171,12 @@ export default function EditUserPage() {
           value={formData[name] || ""}
           onChange={handleChange}
           id={name}
-          className="w-full border p-2 rounded pr-10"
+          className="w-full  p-2 rounded pr-10 bg-white"
         />
         {type === "password" && (
           <span
             onClick={togglePasswordVisibility}
-            className="absolute right-3 top-9 cursor-pointer text-blue-500"
+            className="absolute right-3 top-9 cursor-pointer text-[#1fabaa]"
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </span>
@@ -193,7 +193,7 @@ export default function EditUserPage() {
         value={formData[name] || ""}
         onChange={handleChange}
         id={name}
-        className="w-full border p-2 rounded"
+        className="w-full  p-2 rounded bg-white"
       >
         <option value="">Select {label}</option>
         {options.map(opt => (
@@ -211,20 +211,20 @@ export default function EditUserPage() {
         checked={formData[name] || false}
         onChange={handleChange}
         id={name}
-        className="mr-2"
+        className="mr-2 h-4 w-4 rounded-md border-gray-300 text-white accent-[#1fabaa] focus:ring-2 focus:ring-[#1fabaa]"
       />
       <label htmlFor={name} className="text-sm text-gray-500">{label}</label>
     </div>
   );
 
   return (
-    <div className="max-w-5xl m-[15px] text-white bg-blue-100 rounded-[20px] p-[25px] sm:m-auto ">
+    <div className="max-w-5xl m-[15px] text-white bg-[#eee] rounded-[20px] p-[25px] sm:m-auto ">
       <div className="lines">
         <div className="line"></div>
         <div className="line"></div>
         <div className="line"></div>
       </div>
-      <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">Edit User</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center text-[#1fabaa]">Edit User</h2>
 
       {loading ? (
         <div className="flex justify-center items-center min-h-screen flex-col gap-3.5 ">
@@ -243,13 +243,13 @@ export default function EditUserPage() {
             {formData.profileImage && (
               <img src={formData.profileImage} alt="Profile" className="mx-auto  object-cover rounded-full mb-4 w-[90px] h-[90px] sm:w-[120px] sm:h-[120px]" />
             )}
-            <input type="file" name="profileImage" onChange={handleImageChange} className="text-blue-400" />
+            <input type="file" name="profileImage" onChange={handleImageChange} className="text-[#1fabaa]" />
           </div>
 
           {/* Basic Info */}
           <section>
-            <h3 className="text-xl font-semibold mb-4 text-blue-600">Basic Info</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-blue-400">
+            <h3 className="text-xl font-semibold mb-4 text-[#1fabaa]">Basic Info</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#1fabaa]">
               {renderInput("Name", "name")}
               {renderInput("Email", "email", "email")}
               {renderInput("Job Title", "jobTitle")}
@@ -265,8 +265,8 @@ export default function EditUserPage() {
 
           {/* Employee Status and resigned Reason */}
           <section>
-            <h3 className="text-xl font-semibold mb-4 text-blue-600">Employee Status</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-blue-400">
+            <h3 className="text-xl font-semibold mb-4 text-[#1fabaa]">Employee Status</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#1fabaa]">
             {renderSelect("Employee Status", "employeeStatus", ["active", "resigned"])}
             {formData.employeeStatus === "resigned" && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -291,7 +291,7 @@ export default function EditUserPage() {
                     }}
                     dateFormat="yyyy-MM-dd"
                     locale="en-GB"
-                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+                    className="w-full p-2 bg-white  rounded focus:outline-none focus:ring-2 focus:ring-[#1fabaa] text-gray-900"
                   />
 
                     {errors.resignationDate && (
@@ -308,8 +308,8 @@ export default function EditUserPage() {
 
           {/* Contact Info */}
           <section>
-            <h3 className="text-xl font-semibold mb-4 text-blue-600">Contact Info</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-blue-400">
+            <h3 className="text-xl font-semibold mb-4 text-[#1fabaa]">Contact Info</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#1fabaa]">
               {renderInput("Governorate", "governorate")}
               {renderInput("National ID Address", "nationalIDAddress")}
               {renderInput("Personal Phone", "personalPhone")}
@@ -319,8 +319,8 @@ export default function EditUserPage() {
 
           {/* Contract Info */}
           <section>
-            <h3 className="text-xl font-semibold mb-4 text-blue-600">Contract Details</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-blue-400">
+            <h3 className="text-xl font-semibold mb-4 text-[#1fabaa]">Contract Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#1fabaa]">
               {renderInput("Hire Date", "hireDate", "date")}
               {renderInput("Contract Start", "contractStart", "date")}
               {renderInput("Contract End", "contractEnd", "date")}
@@ -334,8 +334,8 @@ export default function EditUserPage() {
 
           {/* Account Settings */}
           <section>
-            <h3 className="text-xl font-semibold mb-4 text-blue-600">Account Settings</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-blue-400">
+            <h3 className="text-xl font-semibold mb-4 text-[#1fabaa]">Account Settings</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#1fabaa]">
               {renderInput("Password (leave blank to keep current)", "password", "password")}
               {renderSelect("Role", "role", ["employee", "admin"])}
             </div>
@@ -343,8 +343,8 @@ export default function EditUserPage() {
 
           {/* Documents */}
           <section>
-            <h3 className="text-xl font-semibold mb-4 text-blue-600">Documents</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-blue-400">
+            <h3 className="text-xl font-semibold mb-4 text-[#1fabaa]">Documents</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[#1fabaa]">
               {renderCheckbox("Qualification Original Available", "qualificationOriginalAvailable")}
               {renderCheckbox("Birth Certificate Available", "birthCertificateAvailable")}
               {renderCheckbox("Military Service Available", "militaryServiceAvailable")}
@@ -357,7 +357,7 @@ export default function EditUserPage() {
           </section>
 
           <div className="flex justify-center gap-2 text-center">
-            <button type="submit" className="px-8 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+            <button type="submit" className="px-8 py-3 bg-[#1fabaa] text-white rounded-lg shadow-md hover:bg-[#147c7c] transition duration-300">
               Update User
             </button>
             <Button

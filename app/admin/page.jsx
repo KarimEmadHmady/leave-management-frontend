@@ -111,7 +111,7 @@ export default function AdminDashboard() {
       <div className="flex justify-center items-center mb-4 gap-2.5">
         <button
           onClick={() => router.push("/")}
-          className="py-2 px-4 bg-[#0673bc] text-white hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2"
+          className="py-2 px-4 bg-[#1fabaa] text-white hover:bg-gray-200 rounded-xl shadow-sm transition-all flex items-center gap-2"
         >
           Home
         </button>

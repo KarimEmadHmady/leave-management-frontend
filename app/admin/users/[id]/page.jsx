@@ -97,7 +97,7 @@ export default function UserDetailsPage() {
         <div className="flex justify-center items-center min-h-screen flex-col gap-3.5 ">
           <Image
             src="/logo.png"
-            alt="Company Logo"
+            alt=" Logo"
             width={100}
             height={30}
             className="hover:opacity-80 transition"
@@ -114,7 +114,7 @@ export default function UserDetailsPage() {
         <div className="line"></div>
         <div className="line"></div>
       </div>
-      <Card className="p-8 bg-blue-100 shadow-lg rounded-xl space-y-8">
+      <Card className="p-8 bg-[#eee] shadow-lg rounded-xl space-y-8">
         {/* Header */}
         <div className="flex items-center gap-6">
           {user.profileImage && (
@@ -128,13 +128,13 @@ export default function UserDetailsPage() {
             />
           )}
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-blue-800">{user.name}</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1fabaa]">{user.name}</h2>
             <p className="text-gray-500 text-[12px] sm:text-sm">{user.email}</p>
           </div>
         </div>
 
         {/* Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-blue-400">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-[#2e8684]">
           <Info label="Role" value={user.role} />
           <Info label="Job Title" value={user.jobTitle} />
           <Info label="Salary" value={`${user.salary} EGP`} />
@@ -168,7 +168,7 @@ export default function UserDetailsPage() {
 
         {/* Documents */}
         <Section title="Documents Availability">
-  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 list-disc ml-6 text-sm text-blue-800">
+  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 list-disc ml-6 text-sm text-[#1fabaa]">
     {[
       ["Qualification", user.qualificationOriginalAvailable],
       ["Birth Certificate", user.birthCertificateAvailable],
@@ -189,7 +189,7 @@ export default function UserDetailsPage() {
 
         {/* Leave Balance */}
         <Section title="Leave Balance">
-          <ul className="list-disc ml-6 text-blue-800">
+          <ul className="list-disc ml-6 text-[#1fabaa]">
             <li>Annual: {user.leaveBalance?.annual}</li>
             <li>Sick: {user.leaveBalance?.sick}</li>
             <li>Unpaid: {user.leaveBalance?.unpaid}</li>
@@ -199,7 +199,7 @@ export default function UserDetailsPage() {
         {/* Buttons */}
         <div className="flex flex-wrap gap-3 mt-8 justify-center">
           <Button
-            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-blue-600 hover:bg-blue-700"
+            className="w-[90%] sm:w-auto flex items-center gap-2 px-5 py-2 rounded-xl shadow-md bg-[#1fabaa] hover:bg-[#107978]"
             onClick={() => router.push(`/admin/users/edit/${user._id}`)}
           >
             <PencilIcon className="h-5 w-5" />
@@ -237,8 +237,8 @@ export default function UserDetailsPage() {
 
 function Info({ label, value }) {
   return (
-    <div className="bg-gray-50 p-3 rounded border">
-      <span className="font-medium text-blue-800">{label}:</span> {value || "N/A"}
+    <div className="bg-gray-50 p-3 rounded ">
+      <span className="font-medium text-[#1fabaa]">{label}:</span> {value || "N/A"}
     </div>
   );
 }
@@ -246,7 +246,7 @@ function Info({ label, value }) {
 function Section({ title, children }) {
   return (
     <div>
-      <h3 className="text-lg font-semibold text-blue-800 mb-2">{title}</h3>
+      <h3 className="text-lg font-semibold text-[#1fabaa] mb-2">{title}</h3>
       {children}
     </div>
   );

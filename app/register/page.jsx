@@ -97,7 +97,7 @@ export default function Register() {
             />
             <span
               onClick={togglePasswordVisibility}
-              className="absolute right-3 top-9 cursor-pointer text-blue-400"
+              className="absolute right-3 top-9 cursor-pointer text-white"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </span>
@@ -117,7 +117,7 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
+            className="w-full bg-[#eee] text-[#1facab] p-2 rounded hover:bg-black transition"
           >
             Register
           </button>

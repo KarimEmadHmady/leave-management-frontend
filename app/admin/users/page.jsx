@@ -33,12 +33,12 @@ const UsersPage = () => {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-blue-800">All Users</h1>
+        <h1 className="text-3xl font-bold text-[#1fabaa]">All employees</h1>
         <Link
           href="/admin/users/create"
-          className="bg-blue-600 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-700 transition-all duration-300"
+          className="bg-[#1fabaa] text-white px-6 py-2 rounded-md shadow-md hover:bg-[#009897] transition-all duration-300"
         >
-          Create User
+          Create employees
         </Link>
       </div>
 
@@ -49,7 +49,7 @@ const UsersPage = () => {
           placeholder="Search by Name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full sm:w-96 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full sm:w-96 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1fabaa]"
         />
       </div>
 
@@ -70,14 +70,14 @@ const UsersPage = () => {
             <Link
               href={`/admin/users/${user._id}`}
               key={user._id}
-              className="bg-blue-100 shadow-lg hover:shadow-xl transition-all rounded-2xl p-6 transform hover:scale-105 p-[15px]"
+              className="bg-[#eee] shadow-lg hover:shadow-xl transition-all rounded-2xl p-6 transform hover:scale-105 p-[15px]"
             >
               <div className="flex items-center justify-between gap-6">
                 <div>
-                  <h2 className="text-2xl font-semibold text-blue-400">
+                  <h2 className="text-2xl font-semibold text-[#1fabaa]">
                     {user.name}
                   </h2>
-                  <p className="text-blue-400">{user.jobTitle || "No Job Title"}</p>
+                  <p className="text-[#1fabaa]">{user.jobTitle || "No Job Title"}</p>
                   <p className="text-sm text-gray-500">{user.email}</p>
                 </div>
                 <div className="relative w-[80px] h-[80px]">
@@ -87,7 +87,7 @@ const UsersPage = () => {
                       alt={`${user.name}'s Profile`}
                       width={80}
                       height={80}
-                      className="rounded-full object-cover border-4 border-blue-500 shadow-md w-full h-full"
+                      className="rounded-full object-cover border-4 border-[#1fabaa] shadow-md w-full h-full"
                     />
                   )}
                   {user.employeeStatus === "active" && (

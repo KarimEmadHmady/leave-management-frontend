@@ -51,17 +51,17 @@ export default function CreateUserPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-8 bg-blue-100 rounded-2xl shadow-md">
+    <div className="max-w-md mx-auto mt-10 p-8 bg-[#eee] rounded-2xl shadow-md">
       <div className="lines">
         <div className="line"></div>
         <div className="line"></div>
         <div className="line"></div>
       </div>
 
-      <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">Create New User</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-[#1fabaa]">Create New User</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-blue-400 mb-1">
+          <label htmlFor="name" className="block text-sm font-medium text-[#1fabaa] mb-1">
             Name
           </label>
           <input
@@ -71,11 +71,11 @@ export default function CreateUserPage() {
             value={formData.name}
             onChange={handleChange}
             placeholder="Enter full name"
-            className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:text-blue-400  placeholder-blue-400 text-blue-700"
+            className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:text-[#1fabaa]  placeholder-[#1fabaa] text-[#1fabaa]"
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-blue-400 mb-1">
+          <label htmlFor="email" className="block text-sm font-medium text-[#1fabaa] mb-1">
             Email
           </label>
           <input
@@ -85,11 +85,11 @@ export default function CreateUserPage() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter email address"
-            className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:text-blue-400 placeholder-blue-400 text-blue-700"
+            className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:text-[#1fabaa] placeholder-[#1fabaa] text-[#1fabaa]"
           />
         </div>
         <div className="relative">
-          <label htmlFor="password" className="block text-sm font-medium text-blue-400 mb-1">
+          <label htmlFor="password" className="block text-sm font-medium text-[#1fabaa] mb-1">
             Password
           </label>
           <input
@@ -99,18 +99,18 @@ export default function CreateUserPage() {
             value={formData.password}
             onChange={handleChange}
             placeholder="Create password"
-            className="w-full border border-gray-300 p-2 pr-10 rounded-lg focus:outline-none focus:ring-2 focus:text-blue-400 placeholder-blue-400 text-blue-700"
+            className="w-full border border-gray-300 p-2 pr-10 rounded-lg focus:outline-none focus:ring-2 focus:text-[#1fabaa] placeholder-[#1fabaa] text-[#1fabaa]"
           />
           <span
             onClick={togglePasswordVisibility}
-            className="absolute right-3 top-9 cursor-pointer text-blue-400"
+            className="absolute right-3 top-9 cursor-pointer text-[#1fabaa]"
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </span>
         </div>
 
         <div>
-          <label htmlFor="hireDate" className="block text-sm font-medium text-blue-400 mb-1">
+          <label htmlFor="hireDate" className="block text-sm font-medium text-[#1fabaa] mb-1">
             Hire Date
           </label>
           <DatePicker
@@ -120,16 +120,16 @@ export default function CreateUserPage() {
             dateFormat="dd/MM/yyyy"
             locale="en-GB"
             placeholderText="Select hire date"
-            className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:text-blue-400 placeholder-blue-400 text-blue-700"
+            className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:text-[#1fabaa] placeholder-[#1fabaa] text-[#1fabaa]"
           />
         </div>
 
         <div className="flex items-center justify-between mt-4 gap-2">
           <button
             type="submit"
-            className="w-full bg-blue-400 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+            className="w-full bg-[#1fabaa] text-white py-2 rounded-lg hover:bg-[#1fabaa] transition duration-300"
           >
-            Create User
+            Create employees
           </button>
           <Button
             variant="secondary"

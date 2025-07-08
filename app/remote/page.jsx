@@ -104,7 +104,7 @@ export default function RemoteWork() {
                     <div className="flex justify-between items-center gap-2">
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
+                        className="w-full bg-white text-[#1fabaa] p-2 rounded hover:bg-[#eee] transition"
                     >
                         Submit Request
                     </button>

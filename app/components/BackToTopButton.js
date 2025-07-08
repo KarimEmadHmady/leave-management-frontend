@@ -28,7 +28,7 @@ const BackToTopButton = () => {
     return (
         <button
         onClick={scrollToTop}
-        className={`fixed bottom-5 right-5 p-3 bg-blue-600 text-white rounded-full shadow-lg transition-opacity ${
+        className={`fixed bottom-5 right-5 p-3 bg-[#1fabaa] text-white rounded-full shadow-lg transition-opacity ${
             isVisible ? "opacity-100" : "opacity-0"
         } hover:bg-blue-700`}
         style={{ transition: "opacity 0.3s ease" }}

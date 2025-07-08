@@ -70,7 +70,7 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#eee] text-gray-200"
               required
             />
           </div>
@@ -80,12 +80,12 @@ export default function Login() {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 pr-10 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200 bg-transparent"
+              className="w-full p-2 pr-10 border rounded focus:outline-none focus:ring-2 focus:ring-[#eee] text-gray-200 bg-transparent"
               required
             />
             <span
               onClick={togglePasswordVisibility}
-              className="absolute right-3 top-9 cursor-pointer text-blue-400"
+              className="absolute right-3 top-9 cursor-pointer text-white"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </span>
@@ -93,7 +93,7 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
+            className="w-full bg-[#eee] text-[#1facab] p-2 rounded hover:bg-black transition"
           >
             Login
           </button>

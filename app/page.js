@@ -69,11 +69,11 @@ export default function Home() {
       ) : (
         leaveBalance && (
           <div className="mt-8 bg-gray-800 p-4 rounded-lg shadow-md">
-            <h2 className="text-xl font-bold mb-4 text-blue-400">
+            <h2 className="text-xl font-bold mb-4 text-[#1fabaa]">
               Remaining Leave Balance
             </h2>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-blue-100 text-blue-800 p-4 rounded-lg shadow-md font-semibold">
+              <div className="bg-blue-100 text-[#1fabaa] p-4 rounded-lg shadow-md font-semibold">
                 <p>Annual Leave: {leaveBalance.annual} days</p>
               </div>
               <div className="bg-green-100 text-green-800 p-4 rounded-lg shadow-md font-semibold">
@@ -90,7 +90,7 @@ export default function Home() {
       <div className="flex flex-col sm:flex-row gap-4 justify-center p-5">
         <button
           onClick={() => router.push("/leaves")}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition"
+          className="bg-[#1fabaa] hover:bg-[#0e8c8b] text-white font-semibold py-3 px-6 rounded-lg transition"
         >
           Leave Requests
         </button>
