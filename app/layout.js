@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Leave Management App Stream",
-  description: "Manage employee leaves easily",
+  title: "UWD",
+  description: "HR Management System",
 };
 
 export default function RootLayout({ children }) {
