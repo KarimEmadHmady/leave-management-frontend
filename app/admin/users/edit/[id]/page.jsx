@@ -1,4 +1,3 @@
-
 "use client";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -24,7 +23,7 @@ export default function EditUserPage() {
   const [contractStart, setContractStart] = useState(null);
   const [contractEnd, setContractEnd] = useState(null);
   const [resignationDate, setResignationDate] = useState(null);
-
+  const [imageError, setImageError] = useState(""); // State to manage image upload error
 
   useEffect(() => {
     setLoading(true);
@@ -104,6 +103,7 @@ export default function EditUserPage() {
     const file = e.target.files[0];
     const formDataWithImage = new FormData();
     formDataWithImage.append("profileImage", file);
+    setImageError(""); // reset error before upload
 
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/api/user-details/upload/${id}`, formDataWithImage, {
@@ -117,11 +117,12 @@ export default function EditUserPage() {
           ...prevData,
           profileImage: res.data.profileImage,
         }));
+        setImageError("");
         alert("Image uploaded successfully to Cloudinary!");
       })
       .catch((err) => {
         console.error("Error uploading image:", err.response?.data || err.message);
-        alert("Error uploading image: " + (err.response?.data.message || err.message));
+        setImageError(err.response?.data.message || err.message || "Error uploading image");
       });
   };
 
@@ -244,6 +245,9 @@ export default function EditUserPage() {
               <img src={formData.profileImage} alt="Profile" className="mx-auto  object-cover rounded-full mb-4 w-[90px] h-[90px] sm:w-[120px] sm:h-[120px]" />
             )}
             <input type="file" name="profileImage" onChange={handleImageChange} className="text-[#1fabaa]" />
+            {imageError && (
+              <p className="text-red-600 text-sm mt-2">{imageError}</p>
+            )}
           </div>
 
           {/* Basic Info */}
